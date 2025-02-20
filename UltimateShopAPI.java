@@ -4,6 +4,7 @@ import fr.elias.ultimateShopGui.*;
 import fr.elias.ultimateShopGui.data.category.Category;
 import fr.elias.ultimateShopGui.data.item.ShopItem;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -68,6 +69,30 @@ public class UltimateShopAPI {
 
     public @NotNull PlayerAuction getPlayerAuction() {
         return plugin.getPlayerAuction();
+    }
+
+    public double getBalance(@NotNull Player player, @NotNull String currency) {
+        return this.getDataManager().getCurrency(currency, player.getName());
+    }
+
+    public boolean hasBalance(@NotNull Player player, @NotNull String currency, double amount) {
+        return this.getEconomyManager().hasFunds(player, amount, currency);
+    }
+
+    public void depositBalance(@NotNull Player player, @NotNull String currency, double amount) {
+        this.getEconomyManager().addFunds(player.getName(), amount, currency);
+    }
+
+    public void withdrawBalance(@NotNull Player player, @NotNull String currency, double amount) {
+        this.getEconomyManager().deductFunds(player, amount, currency);
+    }
+
+    public boolean isCurrencySupported(@NotNull String currency) {
+        return this.getDataManager().isCurrencySupported(currency);
+    }
+
+    public @NotNull List<String> getAllCurrencies() {
+        return plugin.getDataManager().currenciesList();
     }
 
     public @NotNull EconomyManager getEconomyManager() {
