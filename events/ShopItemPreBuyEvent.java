@@ -11,17 +11,18 @@ import org.jetbrains.annotations.NotNull;
 
 @Getter
 @AllArgsConstructor
-public class ShopItemPreBuyEvent extends Event {
+public class ShopItemSellEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player player;
 
     private final ItemStack item;
+    private final int amount;
 
     private final String currency;
 
     @Setter
-    private double price;
+    private double totalSellPrice;
 
     public static HandlerList getHandlerList() {
         return HANDLERS;
@@ -32,3 +33,4 @@ public class ShopItemPreBuyEvent extends Event {
         return HANDLERS;
     }
 }
+
